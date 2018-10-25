@@ -94,6 +94,132 @@ byte frames[][8] = {
 }
 };
 
+byte scowl_right_frames[][8] = {
+  { //left
+  B01110000,
+  B10001000,
+  B10000100,
+  B10011010,
+  B10011001,
+  B10000001,
+  B10000001,
+  B01111110
+}, 
+ { //right
+  B00001110,
+  B00010001,
+  B00100001,
+  B01011001,
+  B10011001,
+  B10000001,
+  B10000001,
+  B01111110
+},
+{ //left
+  B01110000,
+  B10001000,
+  B10000100,
+  B10001110,
+  B10001101,
+  B10000001,
+  B10000001,
+  B01111110
+}, 
+ { //right
+  B00001110,
+  B00010001,
+  B00100001,
+  B01001101,
+  B10001101,
+  B10000001,
+  B10000001,
+  B01111110
+},
+{ //left
+  B01110000,
+  B10001000,
+  B10000100,
+  B10000110,
+  B10000111,
+  B10000001,
+  B10000001,
+  B01111110
+}, 
+ { //right
+  B00001110,
+  B00010001,
+  B00100001,
+  B01000111,
+  B10000111,
+  B10000001,
+  B10000001,
+  B01111110
+}
+};
+
+
+byte scowl_left_frames[][8] = {
+  { //left
+    B01110000,
+    B10001000,
+    B10000100,
+    B10011010,
+    B10011001,
+    B10000001,
+    B10000001,
+    B01111110
+  }, 
+   { //right
+    B00001110,
+    B00010001,
+    B00100001,
+    B01011001,
+    B10011001,
+    B10000001,
+    B10000001,
+    B01111110
+  },
+  { //left
+    B01110000,
+    B10001000,
+    B10000100,
+    B10110010,
+    B10110001,
+    B10000001,
+    B10000001,
+    B01111110
+  }, 
+   { //right
+    B00001110,
+    B00010001,
+    B00100001,
+    B01110001,
+    B10110001,
+    B10000001,
+    B10000001,
+    B01111110
+  },
+    { //left
+    B01110000,
+    B10001000,
+    B10000100,
+    B11100010,
+    B11100001,
+    B10000001,
+    B10000001,
+    B01111110
+  }, 
+   { //right
+    B00001110,
+    B00010001,
+    B00100001,
+    B01100001,
+    B11100001,
+    B10000001,
+    B10000001,
+    B01111110
+  }
+};
 
 /* we always wait a bit between updates of the display */
 unsigned long delaytime=300;
@@ -124,8 +250,48 @@ void test_leds(){
   }
 }
 
+void scowl_right(){
+    for(int i=0;i<=4;i+=2){
+      for(int j=0;j<8;j++){
+       lc.setRow(0, j, scowl_right_frames[i][j]);
+       lc.setRow(1, j, scowl_right_frames[i+1][j]);
+      }
+      delay(delaytime);
+   }
+}
 
-void loop() { 
+void un_scowl_right(){
+    for(int i=4;i>=0;i-=2){
+      for(int j=0;j<8;j++){
+       lc.setRow(0, j, scowl_right_frames[i][j]);
+       lc.setRow(1, j, scowl_right_frames[i+1][j]);
+      }
+      delay(delaytime);
+   }
+}
+
+void scowl_left(){
+    for(int i=0;i<=4;i+=2){
+      for(int j=0;j<8;j++){
+       lc.setRow(0, j, scowl_left_frames[i][j]);
+       lc.setRow(1, j, scowl_left_frames[i+1][j]);
+      }
+      delay(delaytime);
+   }
+}
+
+void un_scowl_left(){
+    for(int i=4;i>=0;i-=2){
+      for(int j=0;j<8;j++){
+       lc.setRow(0, j, scowl_left_frames[i][j]);
+       lc.setRow(1, j, scowl_left_frames[i+1][j]);
+      }
+      delay(delaytime);
+   }
+}
+
+
+void scowl() {
   for(int i=0;i<=4;i+=2){
     for(int j=0;j<8;j++){
      lc.setRow(0, j, frames[i][j]);
@@ -133,7 +299,9 @@ void loop() {
     }
     delay(delaytime);
   }
-  delay(1000);
+}
+
+void unscowl(){
   for(int i=4;i>=0;i-=2){
     for(int j=0;j<8;j++){
      lc.setRow(0, j, frames[i][j]);
@@ -141,6 +309,22 @@ void loop() {
     }
     delay(delaytime);
   }
+}
+
+void loop() { 
+  scowl();
+  delay(1000);
+  scowl_right();
+  delay(1000);
+  un_scowl_right();
+  delay(1000);
+  unscowl();
+  delay(2000);
+  scowl();
+  delay(1000);
+  scowl_left();
+  delay(1000);
+  un_scowl_left();
   delay(1000);
 }
 
